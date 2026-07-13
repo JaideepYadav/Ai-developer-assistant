@@ -1,0 +1,17 @@
+{
+  "name": "ai-pr-generator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Production-style scaffold for AI-assisted commit, PR, review, and code explanation generation.",
+  "workspaces": ["client"],
+  "scripts": {
+    "dev:client": "npm --workspace client run dev",
+    "build": "npm --workspace client run build",
+    "check": "npm --workspace client run check",
+    "lint": "npm --workspace client run lint",
+    "format": "npm --workspace client run format"
+  },
+  "engines": {
+    "node": ">=20.11.0"
+  }
+}
