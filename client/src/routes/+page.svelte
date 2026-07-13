@@ -6,42 +6,32 @@
   import TextArea from '$lib/components/TextArea.svelte';
   import { generateCommit, generatePR } from '$lib/services/api';
   import type { GenerationResult } from '$lib/types/generation';
+  import { saveHistory } from '$lib/utils/history';
 
-  const cards = [
-    {
-      icon: 'CM',
-      title: 'Generate Commit Message',
-      description:
-        'Convert staged changes or pasted diffs into clear conventional commit messages.',
-      action: 'Create Commit'
-    },
-    {
-      icon: 'PR',
-      title: 'Generate PR',
-      description:
-        'Draft concise pull request titles and descriptions with summaries and testing notes.',
-      action: 'Draft PR'
-    },
+  const navCards = [
     {
       icon: 'EX',
       title: 'Explain Code',
       description:
         'Turn complex snippets into practical explanations for maintainers and reviewers.',
-      action: 'Explain Code'
+      action: 'Explain Code',
+      href: '/explain'
     },
     {
       icon: 'RV',
       title: 'Review Code',
       description:
-        'Surface mock review suggestions for correctness, maintainability, and missing tests.',
-      action: 'Review Code'
+        'Surface review suggestions for correctness, maintainability, and missing tests.',
+      action: 'Review Code',
+      href: '/review'
     },
     {
       icon: 'HI',
-      title: 'Recent History',
+      title: 'History',
       description:
         'Track generated outputs and revisit previous commit, PR, review, and explanation drafts.',
-      action: 'View History'
+      action: 'View History',
+      href: '/history'
     }
   ];
 
@@ -67,6 +57,7 @@
 
     try {
       generatedCommit = await generateCommit({ context: codeContext });
+      saveHistory(generatedCommit);
     } catch (error) {
       errorMessage = error instanceof Error ? error.message : 'Failed to generate commit message.';
     } finally {
@@ -89,6 +80,7 @@
       generatedPR = await generatePR({
         context: codeContext
       });
+      saveHistory(generatedPR);
     } catch (error) {
       errorMessage = error instanceof Error ? error.message : 'Failed to generate pull request.';
     } finally {
@@ -140,13 +132,13 @@
               A modern developer dashboard foundation ready for future OpenCode-powered generation
               workflows.
             </p>
-            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <!--<div class="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button>Start Generating</Button>
               <Button
                 variant="ghost"
                 class="bg-white/10 text-white hover:bg-white/15 hover:text-white">View Docs</Button
               >
-            </div>
+            </div>-->
           </div>
 
           <div
@@ -226,8 +218,8 @@
           </div>
         </div>
 
-        <div class="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-5">
-          {#each cards as card}
+        <div class="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          {#each navCards as card}
             <DashboardCard {...card} />
           {/each}
         </div>

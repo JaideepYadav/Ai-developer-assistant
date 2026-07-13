@@ -1,0 +1,135 @@
+<script lang="ts">
+  import Button from '$lib/components/Button.svelte';
+  import NavBar from '$lib/components/NavBar.svelte';
+  import Sidebar from '$lib/components/Sidebar.svelte';
+  import TextArea from '$lib/components/TextArea.svelte';
+  import { generateExplanation } from '$lib/services/api';
+  import type { GenerationResult } from '$lib/types/generation';
+  import { saveHistory } from '$lib/utils/history';
+
+  let codeInput = $state('');
+  let isExplaining = $state(false);
+  let result = $state<GenerationResult | null>(null);
+  let errorMessage = $state('');
+
+  async function handleExplain() {
+    errorMessage = '';
+    result = null;
+
+    if (!codeInput.trim()) {
+      errorMessage = 'Paste code before requesting an explanation.';
+      return;
+    }
+
+    isExplaining = true;
+
+    try {
+      result = await generateExplanation({ context: codeInput });
+      saveHistory(result);
+    } catch (error) {
+      errorMessage = error instanceof Error ? error.message : 'Failed to explain code.';
+    } finally {
+      isExplaining = false;
+    }
+  }
+  let copyMessage = $state('');
+
+  async function copyExplanation() {
+    if (!result) return;
+
+    try {
+      await navigator.clipboard.writeText(result.content);
+      copyMessage = 'Copied to clipboard.';
+    } catch (error) {
+      console.error(error);
+      copyMessage = 'Unable to copy.';
+    }
+  }
+</script>
+
+<svelte:head>
+  <title>Explain Code - AI Developer Assistant</title>
+</svelte:head>
+
+<div
+  class="min-h-screen bg-[radial-gradient(circle_at_top_left,#dbeafe,transparent_30%),linear-gradient(180deg,#f8fafc,#eef2ff)]"
+>
+  <NavBar />
+
+  <div class="flex min-h-[calc(100vh-4rem)]">
+    <Sidebar />
+
+    <main class="flex-1 px-4 py-6 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl">
+        <a
+          href="/"
+          class="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-slate-950"
+        >
+          <span>&larr;</span>
+          Back to Dashboard
+        </a>
+
+        <div
+          class="shadow-card rounded-[2rem] border border-slate-200 bg-white/85 p-8 backdrop-blur"
+        >
+          <h1 class="text-3xl font-black tracking-tight text-slate-950">Explain Code</h1>
+          <p class="mt-3 max-w-2xl text-base leading-7 text-slate-600">
+            Paste any code snippet and get a structured explanation with a summary, breakdown, and
+            improvement suggestions.
+          </p>
+
+          <div class="mt-6">
+            <TextArea
+              id="explain-input"
+              label="Code to explain"
+              bind:value={codeInput}
+              placeholder="Paste your code here..."
+              rows={10}
+            />
+          </div>
+
+          <div class="mt-5">
+            <Button onclick={handleExplain} disabled={isExplaining}>
+              {isExplaining ? 'Explaining...' : 'Explain Code'}
+            </Button>
+          </div>
+
+          {#if errorMessage}
+            <div class="mt-5 rounded-2xl border border-red-200 bg-red-50 p-4">
+              <p class="text-sm font-medium text-red-700">{errorMessage}</p>
+            </div>
+          {/if}
+
+          {#if isExplaining}
+            <div class="border-brand-100 bg-brand-50/80 mt-6 animate-pulse rounded-2xl border p-6">
+              <div class="mb-4 h-4 w-48 rounded bg-slate-200"></div>
+              <div class="space-y-3">
+                <div class="h-3 w-full rounded bg-slate-200"></div>
+                <div class="h-3 w-5/6 rounded bg-slate-200"></div>
+                <div class="h-3 w-4/6 rounded bg-slate-200"></div>
+              </div>
+            </div>
+          {/if}
+
+          {#if result}
+            <div class="border-brand-100 bg-brand-50/80 mt-6 rounded-2xl border p-6">
+              <div class="mb-4 flex items-start justify-between">
+                <p class="text-brand-700 text-xs font-bold uppercase tracking-[0.2em]">
+                  {result.title}
+                </p>
+                <Button variant="secondary" onclick={copyExplanation}>Copy</Button>
+              </div>
+              <div class="max-h-96 overflow-y-auto rounded-xl bg-white/60 p-4">
+                <pre
+                  class="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed text-slate-900">{result.content}</pre>
+              </div>
+              {#if copyMessage}
+                <p class="mt-2 text-sm text-slate-600">{copyMessage}</p>
+              {/if}
+            </div>
+          {/if}
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

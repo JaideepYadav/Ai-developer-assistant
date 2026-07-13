@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Button from './Button.svelte';
 </script>
 
 <header class="sticky top-0 z-30 border-b border-slate-200/80 bg-white/85 backdrop-blur-xl">
@@ -22,7 +21,7 @@
       >
         Mock mode
       </span>
-      <Button variant="secondary">Settings</Button>
+      <!--<Button variant="secondary">Settings</Button>-->
     </div>
   </div>
 </header>
