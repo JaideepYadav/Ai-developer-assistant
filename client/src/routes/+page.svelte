@@ -4,7 +4,7 @@
   import NavBar from '$lib/components/NavBar.svelte';
   import Sidebar from '$lib/components/Sidebar.svelte';
   import TextArea from '$lib/components/TextArea.svelte';
-  import { generateCommit } from '$lib/services/api';
+  import { generateCommit, generatePR } from '$lib/services/api';
   import type { GenerationResult } from '$lib/types/generation';
 
   const cards = [
@@ -48,6 +48,8 @@
   let codeContext = $state('');
   let isGeneratingCommit = $state(false);
   let generatedCommit = $state<GenerationResult | null>(null);
+  let isGeneratingPR = $state(false);
+  let generatedPR = $state<GenerationResult | null>(null);
   let errorMessage = $state('');
   let copyMessage = $state('');
 
@@ -71,6 +73,28 @@
       isGeneratingCommit = false;
     }
   }
+  async function handleGeneratePR() {
+    errorMessage = '';
+    copyMessage = '';
+    generatedPR = null;
+
+    if (!codeContext.trim()) {
+      errorMessage = 'Paste a diff or code context before generating a pull request.';
+      return;
+    }
+
+    isGeneratingPR = true;
+
+    try {
+      generatedPR = await generatePR({
+        context: codeContext
+      });
+    } catch (error) {
+      errorMessage = error instanceof Error ? error.message : 'Failed to generate pull request.';
+    } finally {
+      isGeneratingPR = false;
+    }
+  }
 
   async function copyGeneratedCommit() {
     if (!generatedCommit) return;
@@ -80,6 +104,16 @@
       copyMessage = 'Copied to clipboard.';
     } catch {
       copyMessage = 'Unable to copy. Please copy the message manually.';
+    }
+  }
+  async function copyGeneratedPR() {
+    if (!generatedPR) return;
+
+    try {
+      await navigator.clipboard.writeText(generatedPR.content);
+      copyMessage = 'Copied to clipboard.';
+    } catch {
+      copyMessage = 'Unable to copy. Please copy manually.';
     }
   }
 </script>
@@ -94,8 +128,8 @@
 
     <main class="flex-1 px-4 py-6 sm:px-6 lg:px-8">
       <section class="mx-auto max-w-7xl">
-        <div class="grid gap-6 lg:grid-cols-[1.35fr_0.65fr] lg:items-stretch">
-          <div class="shadow-card rounded-[2rem] bg-slate-950 p-8 text-white">
+        <div class="grid gap-6 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
+          <div class="shadow-card self-start rounded-[2rem] bg-slate-950 p-8 text-white">
             <p class="text-brand-100 text-sm font-semibold uppercase tracking-[0.24em]">
               Production scaffold
             </p>
@@ -131,9 +165,22 @@
               />
             </div>
             <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button onclick={handleGenerateCommit} disabled={isGeneratingCommit}>
-                {isGeneratingCommit ? 'Generating...' : 'Generate Commit'}
-              </Button>
+              <div class="flex gap-3">
+                <Button
+                  onclick={handleGenerateCommit}
+                  disabled={isGeneratingCommit || isGeneratingPR}
+                >
+                  {isGeneratingCommit ? 'Generating...' : 'Generate Commit'}
+                </Button>
+
+                <Button
+                  variant="secondary"
+                  onclick={handleGeneratePR}
+                  disabled={isGeneratingCommit || isGeneratingPR}
+                >
+                  {isGeneratingPR ? 'Generating...' : 'Generate PR'}
+                </Button>
+              </div>
               {#if errorMessage}
                 <p class="text-sm font-medium text-red-600">{errorMessage}</p>
               {/if}
@@ -155,6 +202,25 @@
                 {#if copyMessage}
                   <p class="mt-3 text-sm text-slate-600">{copyMessage}</p>
                 {/if}
+              </div>
+            {/if}
+            {#if generatedPR}
+              <div class="border-brand-100 bg-brand-50/80 mt-5 rounded-2xl border p-4">
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p class="text-brand-700 text-xs font-bold uppercase tracking-[0.2em]">
+                      {generatedPR.title}
+                    </p>
+
+                    <div class="mt-2 max-h-64 overflow-y-auto rounded-lg bg-white/60 p-3">
+                      <pre class="whitespace-pre-wrap break-words text-sm text-slate-900">
+                    {generatedPR.content}
+                        </pre>
+                    </div>
+                  </div>
+
+                  <Button variant="secondary" onclick={copyGeneratedPR}>Copy</Button>
+                </div>
               </div>
             {/if}
           </div>
