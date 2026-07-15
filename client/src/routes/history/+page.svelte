@@ -151,9 +151,28 @@
                     </div>
                   </div>
 
-                  <div class="mt-5 max-h-64 overflow-y-auto rounded-xl bg-slate-50 p-4">
-                    <pre
-                      class="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed text-slate-900">{item.content}</pre>
+                  {#if item.input}
+                    <div class="mt-5">
+                      <p class="mb-2 text-sm font-semibold text-slate-700">Input</p>
+
+                      <div class="max-h-40 overflow-y-auto rounded-xl bg-slate-50 p-4">
+                        <pre
+                          class="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed text-slate-900">
+                  {item.input}
+                        </pre>
+                      </div>
+                    </div>
+                  {/if}
+
+                  <div class="mt-5">
+                    <p class="mb-2 text-sm font-semibold text-slate-700">Output</p>
+
+                    <div class="max-h-64 overflow-y-auto rounded-xl bg-slate-50 p-4">
+                      <pre
+                        class="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed text-slate-900">
+                  {item.content}
+                      </pre>
+                    </div>
                   </div>
                 </div>
               {/each}
