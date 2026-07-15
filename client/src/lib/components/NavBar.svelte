@@ -19,7 +19,7 @@
       <span
         class="hidden rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 md:inline-flex"
       >
-        Mock mode
+        AI-Powered
       </span>
       <!--<Button variant="secondary">Settings</Button>-->
     </div>
