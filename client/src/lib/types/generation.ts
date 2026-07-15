@@ -11,7 +11,7 @@ export interface GenerationResult {
   type: GenerationType;
   title: string;
   content: string;
-  input?:string;
+  input?: string;
   createdAt: string;
 }
 

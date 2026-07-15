@@ -57,7 +57,7 @@
 
     try {
       generatedCommit = await generateCommit({ context: codeContext });
-      saveHistory({...generatedCommit, input:codeContext});
+      saveHistory({ ...generatedCommit, input: codeContext });
     } catch (error) {
       errorMessage = error instanceof Error ? error.message : 'Failed to generate commit message.';
     } finally {
@@ -80,7 +80,7 @@
       generatedPR = await generatePR({
         context: codeContext
       });
-      saveHistory({...generatedPR, input:codeContext});
+      saveHistory({ ...generatedPR, input: codeContext });
     } catch (error) {
       errorMessage = error instanceof Error ? error.message : 'Failed to generate pull request.';
     } finally {

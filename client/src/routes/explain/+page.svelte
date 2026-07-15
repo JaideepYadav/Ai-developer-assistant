@@ -25,7 +25,7 @@
 
     try {
       result = await generateExplanation({ context: codeInput });
-      saveHistory({...result, input:codeInput});
+      saveHistory({ ...result, input: codeInput });
     } catch (error) {
       errorMessage = error instanceof Error ? error.message : 'Failed to explain code.';
     } finally {
