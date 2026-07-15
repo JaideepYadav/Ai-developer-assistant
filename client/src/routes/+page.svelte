@@ -110,6 +110,14 @@
   }
 </script>
 
+<svelte:head>
+  <title>AI Commit & PR Generator</title>
+  <meta
+    name="description"
+    content="AI-powered commit messages, PR generation, code explanation and code review."
+  />
+</svelte:head>
+
 <div
   class="min-h-screen bg-[radial-gradient(circle_at_top_left,#dbeafe,transparent_30%),linear-gradient(180deg,#f8fafc,#eef2ff)]"
 >
