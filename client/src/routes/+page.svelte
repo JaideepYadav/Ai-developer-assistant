@@ -123,7 +123,7 @@
         <div class="grid gap-6 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
           <div class="shadow-card self-start rounded-[2rem] bg-slate-950 p-8 text-white">
             <p class="text-brand-100 text-sm font-semibold uppercase tracking-[0.24em]">
-              Production scaffold
+              <!--Production scaffold -->
             </p>
             <h1 class="mt-4 max-w-3xl text-4xl font-black tracking-tight sm:text-5xl">
               Generate cleaner commits, PRs, reviews, and explanations.
