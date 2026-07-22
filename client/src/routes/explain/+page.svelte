@@ -51,9 +51,7 @@
   <title>Explain Code - AI Developer Assistant</title>
 </svelte:head>
 
-<div
-  class="min-h-screen bg-[radial-gradient(circle_at_top_left,#dbeafe,transparent_30%),linear-gradient(180deg,#f8fafc,#eef2ff)]"
->
+<div class="min-h-screen" style="background: var(--color-bg-gradient);">
   <NavBar />
 
   <div class="flex min-h-[calc(100vh-4rem)]">
@@ -63,17 +61,19 @@
       <div class="mx-auto max-w-4xl">
         <a
           href="/"
-          class="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-slate-950"
+          class="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
         >
           <span>&larr;</span>
           Back to Dashboard
         </a>
 
         <div
-          class="shadow-card rounded-[2rem] border border-slate-200 bg-white/85 p-8 backdrop-blur"
+          class="shadow-card rounded-[2rem] border border-slate-200 bg-white/85 p-8 backdrop-blur dark:border-slate-700 dark:bg-slate-900/85"
         >
-          <h1 class="text-3xl font-black tracking-tight text-slate-950">Explain Code</h1>
-          <p class="mt-3 max-w-2xl text-base leading-7 text-slate-600">
+          <h1 class="text-3xl font-black tracking-tight text-slate-950 dark:text-white">
+            Explain Code
+          </h1>
+          <p class="mt-3 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-400">
             Paste any code snippet and get a structured explanation with a summary, breakdown, and
             improvement suggestions.
           </p>
@@ -95,36 +95,42 @@
           </div>
 
           {#if errorMessage}
-            <div class="mt-5 rounded-2xl border border-red-200 bg-red-50 p-4">
-              <p class="text-sm font-medium text-red-700">{errorMessage}</p>
+            <div
+              class="mt-5 rounded-2xl border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/30"
+            >
+              <p class="text-sm font-medium text-red-700 dark:text-red-300">{errorMessage}</p>
             </div>
           {/if}
 
           {#if isExplaining}
-            <div class="border-brand-100 bg-brand-50/80 mt-6 animate-pulse rounded-2xl border p-6">
-              <div class="mb-4 h-4 w-48 rounded bg-slate-200"></div>
+            <div
+              class="border-brand-100 bg-brand-50/80 dark:border-brand-700 dark:bg-brand-900/20 mt-6 animate-pulse rounded-2xl border p-6"
+            >
+              <div class="mb-4 h-4 w-48 rounded bg-slate-200 dark:bg-slate-700"></div>
               <div class="space-y-3">
-                <div class="h-3 w-full rounded bg-slate-200"></div>
-                <div class="h-3 w-5/6 rounded bg-slate-200"></div>
-                <div class="h-3 w-4/6 rounded bg-slate-200"></div>
+                <div class="h-3 w-full rounded bg-slate-200 dark:bg-slate-700"></div>
+                <div class="h-3 w-5/6 rounded bg-slate-200 dark:bg-slate-700"></div>
+                <div class="h-3 w-4/6 rounded bg-slate-200 dark:bg-slate-700"></div>
               </div>
             </div>
           {/if}
 
           {#if result}
-            <div class="border-brand-100 bg-brand-50/80 mt-6 rounded-2xl border p-6">
+            <div
+              class="border-brand-100 bg-brand-50/80 dark:border-brand-700 dark:bg-brand-900/30 mt-6 rounded-2xl border p-6"
+            >
               <div class="mb-4 flex items-start justify-between">
                 <p class="text-brand-700 text-xs font-bold uppercase tracking-[0.2em]">
                   {result.title}
                 </p>
                 <Button variant="secondary" onclick={copyExplanation}>Copy</Button>
               </div>
-              <div class="max-h-96 overflow-y-auto rounded-xl bg-white/60 p-4">
+              <div class="max-h-96 overflow-y-auto rounded-xl bg-white/60 p-4 dark:bg-slate-800/60">
                 <pre
-                  class="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed text-slate-900">{result.content}</pre>
+                  class="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed text-slate-900 dark:text-slate-200">{result.content}</pre>
               </div>
               {#if copyMessage}
-                <p class="mt-2 text-sm text-slate-600">{copyMessage}</p>
+                <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{copyMessage}</p>
               {/if}
             </div>
           {/if}

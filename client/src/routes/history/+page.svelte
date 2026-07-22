@@ -67,9 +67,7 @@
   <title>History - AI Developer Assistant</title>
 </svelte:head>
 
-<div
-  class="min-h-screen bg-[radial-gradient(circle_at_top_left,#dbeafe,transparent_30%),linear-gradient(180deg,#f8fafc,#eef2ff)]"
->
+<div class="min-h-screen" style="background: var(--color-bg-gradient);">
   <NavBar />
 
   <div class="flex min-h-[calc(100vh-4rem)]">
@@ -79,20 +77,22 @@
       <div class="mx-auto max-w-5xl">
         <a
           href="/"
-          class="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-slate-950"
+          class="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
         >
           <span>&larr;</span>
           Back to Dashboard
         </a>
 
         <div
-          class="shadow-card rounded-[2rem] border border-slate-200 bg-white/85 p-8 backdrop-blur"
+          class="shadow-card rounded-[2rem] border border-slate-200 bg-white/85 p-8 backdrop-blur dark:border-slate-700 dark:bg-slate-900/85"
         >
           <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <h1 class="text-3xl font-black tracking-tight text-slate-950">History</h1>
+              <h1 class="text-3xl font-black tracking-tight text-slate-950 dark:text-white">
+                History
+              </h1>
 
-              <p class="mt-3 max-w-2xl text-base leading-7 text-slate-600">
+              <p class="mt-3 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-400">
                 View all previously generated commits, pull requests, code explanations and code
                 reviews.
               </p>
@@ -108,36 +108,40 @@
           </div>
 
           {#if copyMessage}
-            <p class="mt-4 text-sm text-green-600">
+            <p class="mt-4 text-sm text-green-600 dark:text-green-400">
               {copyMessage}
             </p>
           {/if}
 
           {#if history.length === 0}
             <div
-              class="mt-8 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center"
+              class="mt-8 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center dark:border-slate-600 dark:bg-slate-800/50"
             >
-              <h2 class="text-lg font-semibold text-slate-900">No history yet</h2>
+              <h2 class="text-lg font-semibold text-slate-900 dark:text-white">No history yet</h2>
 
-              <p class="mt-2 text-slate-600">
+              <p class="mt-2 text-slate-600 dark:text-slate-400">
                 Generate a Commit, Pull Request, Explain Code or Review to see your history here.
               </p>
             </div>
           {:else}
             <div class="mt-8 space-y-6">
               {#each history as item}
-                <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div
+                  class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+                >
                   <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div class="flex-1">
-                      <p class="text-brand-700 text-xs font-bold uppercase tracking-[0.2em]">
+                      <p
+                        class="text-brand-700 dark:text-brand-500 text-xs font-bold uppercase tracking-[0.2em]"
+                      >
                         {getTypeLabel(item.type)}
                       </p>
 
-                      <h2 class="mt-2 text-lg font-bold text-slate-900">
+                      <h2 class="mt-2 text-lg font-bold text-slate-900 dark:text-white">
                         {item.title}
                       </h2>
 
-                      <p class="mt-2 text-sm text-slate-500">
+                      <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
                         {formatDate(item.createdAt)}
                       </p>
                     </div>
@@ -153,11 +157,15 @@
 
                   {#if item.input}
                     <div class="mt-5">
-                      <p class="mb-2 text-sm font-semibold text-slate-700">Input</p>
+                      <p class="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                        Input
+                      </p>
 
-                      <div class="max-h-40 overflow-y-auto rounded-xl bg-slate-50 p-4">
+                      <div
+                        class="max-h-40 overflow-y-auto rounded-xl bg-slate-50 p-4 dark:bg-slate-800/60"
+                      >
                         <pre
-                          class="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed text-slate-900">
+                          class="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed text-slate-900 dark:text-slate-200">
                   {item.input}
                         </pre>
                       </div>
@@ -165,11 +173,15 @@
                   {/if}
 
                   <div class="mt-5">
-                    <p class="mb-2 text-sm font-semibold text-slate-700">Output</p>
+                    <p class="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                      Output
+                    </p>
 
-                    <div class="max-h-64 overflow-y-auto rounded-xl bg-slate-50 p-4">
+                    <div
+                      class="max-h-64 overflow-y-auto rounded-xl bg-slate-50 p-4 dark:bg-slate-800/60"
+                    >
                       <pre
-                        class="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed text-slate-900">
+                        class="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed text-slate-900 dark:text-slate-200">
                   {item.content}
                       </pre>
                     </div>
