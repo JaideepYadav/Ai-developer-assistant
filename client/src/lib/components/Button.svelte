@@ -20,10 +20,12 @@
   }: Props = $props();
 
   const variants = {
-    primary: 'bg-brand-600 text-white shadow-sm hover:bg-brand-700 focus-visible:ring-brand-600',
+    primary:
+      'bg-brand-600 text-white shadow-sm hover:bg-brand-700 focus-visible:ring-brand-600 dark:bg-brand-600 dark:hover:bg-brand-700',
     secondary:
-      'bg-white text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50 focus-visible:ring-brand-600',
-    ghost: 'text-slate-600 hover:bg-slate-100 hover:text-slate-950 focus-visible:ring-slate-400'
+      'bg-white text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50 focus-visible:ring-brand-600 dark:bg-slate-800 dark:text-slate-200 dark:ring-slate-600 dark:hover:bg-slate-700',
+    ghost:
+      'text-slate-600 hover:bg-slate-100 hover:text-slate-950 focus-visible:ring-slate-400 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white'
   };
 </script>
 

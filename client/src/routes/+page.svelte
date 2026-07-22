@@ -218,8 +218,8 @@
                       {generatedPR.title}
                     </p>
 
-                    <div class="mt-2 max-h-64 overflow-y-auto rounded-lg bg-white/60 p-3">
-                      <pre class="whitespace-pre-wrap break-words text-sm text-slate-900">
+                    <div class="mt-2 max-h-64 overflow-y-auto rounded-lg bg-white/60 p-3 dark:bg-slate-800/60">
+                      <pre class="whitespace-pre-wrap break-words text-sm text-slate-900 dark:text-slate-200">
                     {generatedPR.content}
                         </pre>
                     </div>

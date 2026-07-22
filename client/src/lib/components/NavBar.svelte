@@ -16,7 +16,7 @@
   <div class="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
     <div class="flex items-center gap-3">
       <div
-        class="flex size-10 items-center justify-center rounded-2xl bg-slate-950 text-sm font-black text-white"
+        class="flex size-10 items-center justify-center rounded-2xl bg-slate-950 text-sm font-black text-white dark:bg-emerald-600"
       >
         AI
       </div>
