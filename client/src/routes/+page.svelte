@@ -118,9 +118,7 @@
   />
 </svelte:head>
 
-<div
-  class="min-h-screen bg-[radial-gradient(circle_at_top_left,#dbeafe,transparent_30%),linear-gradient(180deg,#f8fafc,#eef2ff)]"
->
+<div class="min-h-screen" style="background: var(--color-bg-gradient);">
   <NavBar />
 
   <div class="flex min-h-[calc(100vh-4rem)]">
@@ -129,7 +127,9 @@
     <main class="flex-1 px-4 py-6 sm:px-6 lg:px-8">
       <section class="mx-auto max-w-7xl">
         <div class="grid gap-6 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
-          <div class="shadow-card self-start rounded-[2rem] bg-slate-950 p-8 text-white">
+          <div
+            class="shadow-card self-start rounded-[2rem] bg-slate-950 p-8 text-white dark:bg-slate-800"
+          >
             <p class="text-brand-100 text-sm font-semibold uppercase tracking-[0.24em]">
               <!--Production scaffold -->
             </p>
@@ -150,10 +150,10 @@
           </div>
 
           <div
-            class="shadow-card rounded-[2rem] border border-slate-200 bg-white/85 p-6 backdrop-blur"
+            class="shadow-card rounded-[2rem] border border-slate-200 bg-white/85 p-6 backdrop-blur dark:border-slate-700 dark:bg-slate-900/85"
           >
-            <h2 class="text-lg font-bold text-slate-950">Quick Context</h2>
-            <p class="mt-2 text-sm leading-6 text-slate-600">
+            <h2 class="text-lg font-bold text-slate-950 dark:text-white">Quick Context</h2>
+            <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
               Paste a diff or snippet to generate a concise Conventional Commit message.
             </p>
             <div class="mt-5">
@@ -187,25 +187,31 @@
             </div>
 
             {#if generatedCommit}
-              <div class="border-brand-100 bg-brand-50/80 mt-5 rounded-2xl border p-4">
+              <div
+                class="border-brand-100 bg-brand-50/80 dark:border-brand-700 dark:bg-brand-900/30 mt-5 rounded-2xl border p-4"
+              >
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <p class="text-brand-700 text-xs font-bold uppercase tracking-[0.2em]">
                       {generatedCommit.title}
                     </p>
-                    <p class="mt-2 break-words font-mono text-sm font-semibold text-slate-950">
+                    <p
+                      class="mt-2 break-words font-mono text-sm font-semibold text-slate-950 dark:text-white"
+                    >
                       {generatedCommit.content}
                     </p>
                   </div>
                   <Button variant="secondary" onclick={copyGeneratedCommit}>Copy</Button>
                 </div>
                 {#if copyMessage}
-                  <p class="mt-3 text-sm text-slate-600">{copyMessage}</p>
+                  <p class="mt-3 text-sm text-slate-600 dark:text-slate-400">{copyMessage}</p>
                 {/if}
               </div>
             {/if}
             {#if generatedPR}
-              <div class="border-brand-100 bg-brand-50/80 mt-5 rounded-2xl border p-4">
+              <div
+                class="border-brand-100 bg-brand-50/80 dark:border-brand-700 dark:bg-brand-900/30 mt-5 rounded-2xl border p-4"
+              >
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <p class="text-brand-700 text-xs font-bold uppercase tracking-[0.2em]">
